@@ -4,3 +4,4 @@ print("대륙 이름을 적으세요.\n선택 가능 대륙= 북아메리카, �
 continent = input()
 
 country.countryMachine(continent)
+# git test test@@@@@
