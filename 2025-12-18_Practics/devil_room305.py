@@ -117,14 +117,14 @@ def execute_terminal(e):
     user_input = entry.get().lower()
     words = user_input.replace(" ", "").split(",")
     
-    score = 0
+    s_core = 0
     target_words = GAME["spells"][GAME["current_spell_type"]]
     
     for w in words:
         if w in target_words:
-            score += 1
+            s_core += 1
     
-    power = 1.0 + (score * 0.5)
+    power = 1.0 + (s_core * 0.5)
     cast_spell(GAME["current_spell_type"], power)
     
     entry.delete(0, tk.END)
