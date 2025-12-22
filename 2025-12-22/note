@@ -27,6 +27,7 @@ git add 파일경로/파일명
 -굳이 버전관리 안 하고 싶은 것도 있을 것이므로
 
 git add . 터미널 경로에 있는 전체 변경된 파일들을 한번에 스테이징 상태로 전환
+파일별로 각각 스테이징하는 게 정석. 이 명령어는 특수한 경우에만
 
 git init와 함께 처음 개발환경 세팅할 때 쓰는 명령어 2줄
 git config --global user.email "navyartist7@gmail.com"
