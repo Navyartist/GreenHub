@@ -26,10 +26,17 @@ git add 파일경로/파일명
 "나 버전관리 하고 싶은 파일을 무대 위에 올릴께."
 -굳이 버전관리 안 하고 싶은 것도 있을 것이므로
 
+git add . 터미널 경로에 있는 전체 변경된 파일들을 한번에 스테이징 상태로 전환
+
 git init와 함께 처음 개발환경 세팅할 때 쓰는 명령어 2줄
 git config --global user.email "navyartist7@gmail.com"
 git config --global user.name "손예진"
 
 git commit -m "남길 메시지"
 스테이징된 파일들의 버전을 커밋, 함께 남길 메시지도 입력
+여기 적은 메시지를 깃허브에서 볼 수 있나?
+깃허브 쪽에는 업데이트 안 됨 -> github desktop에서 조작 (다만 gui)
 
+일반 저장 - Ctrl + S
+-> 저장에는 문제가 없지만 내역(버전)을 보기엔 여간 힘들다.
+내역 저장 - 버전 관리
