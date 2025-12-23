@@ -58,3 +58,5 @@ clone, push -> pull, fetch
 
 업로드가 되어야 '시도', '작업', '기록' 완료라고 할 수 있음
 이제부터 베이스는 github로
+
+"test"

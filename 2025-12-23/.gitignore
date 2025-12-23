@@ -1,0 +1,5 @@
+# .gitignore
+
+# .gitignore 파일은 Git이 특정 파일을 추적하지 않도록 설정하는 파일이다.
+
+*.c
