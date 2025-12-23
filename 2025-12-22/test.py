@@ -16,9 +16,9 @@ class Member:
         self.name = name
         self.age = age
         self.home = home
-
-def __str__(self):
-    return f"이름: {self.name}, 나이: {self.age}세, 사는곳: {self.home}시"
+    # 클래스 내부에 들어가야함
+    def __str__(self):
+        return f"이름: {self.name}, 나이: {self.age}세, 사는곳: {self.home}시"
 
 dogInfo = Member("개", 50, "서울")
 print(dogInfo)
