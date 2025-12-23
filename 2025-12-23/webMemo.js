@@ -1,32 +1,32 @@
 function updateDate() {
-    // 1. 한국 시간 기준 날짜 생성
     const today = new Date();
     
+    // 1. 날짜 부분 만들기 (2025년 12월 23일)
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const date = today.getDate();
-    const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
-    const day = dayNames[today.getDay()];
+    
+    // 2. 시간 부분 만들기 (시:분:초)
+    // padStart(2, '0')는 숫자가 한 자리일 때 앞에 '0'을 붙여서 '09'처럼 보이게 해줍니다.
+    const hours = String(today.getHours()).padStart(2, '0');
+    const minutes = String(today.getMinutes()).padStart(2, '0');
+    const seconds = String(today.getSeconds()).padStart(2, '0');
 
-    const dateString = `${year}년 ${month}월 ${date}일 (${day})`;
+    // 3. 전체를 하나의 문자열로 합치기
+    const fullText = `${year}년 ${month}월 ${date}일 ${hours}:${minutes}:${seconds}`;
 
-    // 2. 박스 찾기 (없으면 새로 만들고, 있으면 내용만 교체)
+    // 4. 화면에 뿌려주기
     let box = document.querySelector('.my-box');
     
     if (!box) {
-        // 처음 실행될 때 박스 생성
-        const boxHTML = `<div class="my-box">${dateString}</div>`;
-        document.body.insertAdjacentHTML('beforeend', boxHTML);
+        // 박스가 처음 생성될 때
+        document.body.insertAdjacentHTML('beforeend', `<div class="my-box">${fullText}</div>`);
     } else {
-        // 자정이 지나서 데이터가 바뀌면 텍스트만 업데이트
-        if (box.innerText !== dateString) {
-            box.innerText = dateString;
-        }
+        // 이미 있는 박스의 내용만 1초마다 업데이트
+        box.innerText = fullText;
     }
 }
 
-// 3. 페이지가 열릴 때 즉시 한 번 실행
-updateDate();
-
-// 4. 1초(1000ms)마다 시간을 체크해서 자정이 넘었는지 감시
+// 1초마다 실행
 setInterval(updateDate, 1000);
+updateDate(); // 실행하자마자 첫 화면을 보여주기 위해 호출
