@@ -1,7 +1,7 @@
 .my-box {
-    width: 200px;
+    width: 300px;
     height: 200px;
-    background-color: yellow;
+    background-color: royalblue;
     border-radius: 10px;
     display: flex;
     justify-content: center;
