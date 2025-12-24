@@ -1,0 +1,19 @@
+
+
+class 책():
+    def __init__(self, 도서명, 저자, 출판사):
+        self.도서명 = 도서명
+        self.저자 = 저자
+        self.출판사 = 출판사
+
+create
+def 책꽂기()
+
+reading
+def 책읽기
+
+update (책꽂이)
+def 책정리
+
+delete
+def 책치우기
