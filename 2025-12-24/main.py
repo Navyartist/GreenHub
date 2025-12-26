@@ -19,8 +19,9 @@ for shelf in shelves:
         break
     else:
         print("일치하는 책꽂이 이름이 없어요.")
+        # 아래 WHILE문 실행 안 되고 프로그램 종료할 수 있게 만들어주는 방법?
 
-while(target_shelf != None):
+while(target_shelf != ""):
     기능선택 = input("사용할 기능을 선택하세요. [책꽂기]: 1번, [책검색]: 2번, [책정보 바꾸기]: 3번, [책 치우기]: 4번, [종료]: 5번.\n")
     if 기능선택 == '1':
         target_shelf.책꽂기()
