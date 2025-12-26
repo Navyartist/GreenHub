@@ -2,9 +2,15 @@
 import json
 import os
 
-current_dir = os.path.dirname(os.path.abspath(__file__))\
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# __file__ : 이 파일명 (bookshelf.py)
+# 지금 실행하고 있는 파일의 처음부터 끝까지의 경로를 뱉고(os.path.abspath(__file__)) 그 실행하고 있는 파일의 이름은 빼라(dirname)
 
 file_path = os.path.join(current_dir, 'data.json')
+# 진짜 쓸 파일패스(파일경로)
+    # 앞서 만든 current_dir에 운영체제 따라 알아서 \, / 사이에 넣어 'data.json'이랑 합쳐줌(join) = 최종 파일패스
+    # 나중에 여러 파일, 다양한 경로에 있는 파일들 한꺼번에 데이터 수정할 때 편할듯
+# os 라이브러리기반
 
 # CREATE : 책꽂이에 새로 산 책을 꽂는다
 def 책꽂기():
@@ -17,11 +23,11 @@ def 책꽂기():
 
     파일경로 = file_path
 
-    if os.path.exists(파일경로):
-        with open(파일경로, 'r', encoding='utf-8') as f:
+    if os.path.exists(파일경로): # 파일 있으면(exists) 열어 (with open문 실행)
+        with open(파일경로, 'r', encoding='utf-8') as f: # f는 파일과 내 파이썬 코드를 연결해주는 일종의 '빨대(straw)' 꼭 f일 필요 없고 straw, 통로등 이름붙여도 됨, 중요한건 with - as 구조. with ~ as '빨대': 일때, 이 with ~ as 사이 안에서만 파일 열어서 이 빨대(straw, f)로 지정한 파일('파일경로'로 지정한 파일)이랑 파이썬 코드를 연결해라, 는 뜻
             try:
-                책_리스트 = json.load(f)
-            except json.JSONDecodeError:
+                책_리스트 = json.load(f) # 해당 파일(통로 f에 이어져있는 목적지=파일) json 데이터 다 읽어와~(load)
+            except json.JSONDecodeError: # 안 읽히면(json형식[=문법] 제대로 못지킨 데이터가 있다든가 해서 decode가 안되면)
                 책_리스트 = []
             # "책 리스트를 읽어. 근데 책 리스트가 없으면은 에러가 날 수 있어!"
     else: # "파일이 아예 없으면 새로 만들거야."
@@ -30,8 +36,16 @@ def 책꽂기():
     책_리스트.append(새책)
 
     with open(파일경로, 'w', encoding='utf-8') as f:
-        # json.dump(데이터, 파일객체, 들여쓰기, 한글깨짐방지)
+        # json.dump(파일에 새로 쓸 데이터[='책_리스트'], 파일객체[통로(빨대)], 들여쓰기[관련된 1,2,3,4등의 옵션지정. 숫자 클수록 들여쓰기 칸(공백) 늘어남. 4가 보통 쓰임], 한글깨짐방지[ascii code 그대로 적용할거냐? 아니.(=false)]))
         json.dump(책_리스트, f, indent=4, ensure_ascii=False)
+
+        #json.dump 함수가 내부적으로 하는 진짜 중요한 프로세스가 하나 더 있어요.
+
+        # "직렬화(Serialization)"
+
+        # 파이썬 세상에 살고 있는 리스트나 딕셔너리는 사실 메모리 속에 복잡하게 얽혀 있는 '객체' 상태입니다. 이걸 파일(JSON)이라는 외부 세상으로 보내려면 **"글자(String) 형태"**로 줄을 세워야 하죠.
+
+        # json.dump는 이 줄 세우기(직렬화)와 전송(통로로 보내기)을 동시에 해주는 함수인 셈입니다.
         print(f"도서명 {도서명}: 정보를 JSON 파일에 저장 완료!")
 
 # READING : 책의 데이터를 모두 불러와 읽고 원하는 책을 검색한다.
@@ -47,11 +61,12 @@ def 책검색():
         모든책 = json.load(f)
 
         # 책정보 필터링
-        검색결과 = [책 for 책 in 모든책 if 검색단어 in 책[필드]]
+        검색결과 = [책 for 책 in 모든책 if 검색단어 in 책[필드]] # '검색결과' 변수의 자료형은 리스트
+        # json.load(f)로 불러온 데이터('모든책') 안에서 if 책[필드]가 지정한 검색단어를 포함하는(in이라서) 경우의 리스트 요소만 가져온다
 
-        if 검색결과:
+        if 검색결과: # 검색결과로 처리한 데이터('모든책'에서 가져온 리스트요소)가 있을때
             print(f"\n--- '{검색단어}' 검색 결과 ---")
-            for 책 in 검색결과:
+            for 책 in 검색결과: # 이건 그냥 print, 출력처리
                 print(f"도서명: {책['도서명']} | 작가: {책['작가']} | 출판사: {책['출판사']} | 태그: {책['태그']}")
         else:
             print("찾으시는 책이 없습니다.")
