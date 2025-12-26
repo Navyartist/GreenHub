@@ -1,0 +1,30 @@
+github는 MS(Azure, AWS, GCP)가 먹었다
+-> vscode- github와 연동
+호환잘됨
+
+Cursor ai= vscode 기반 -> ai라는 껍데기하나 더 씌운것
+
+
+====여기 깐 확장플러그인====
+azure Repos,Better Comments,dracula thema official,indent-rainbow
+live server
+
+git graph
+git history
+github repositories
+github pull requests
+project manager
+
+치트아닌 유틸리티적인 도구들을 자유롭게 설치하고 삭제하는 장점을 누려보기
+vscode -github 계정연결 (톱니바퀴위에)
+
+github copilot
+고글쓴 걔
+MS Copilot친구랑 다름 (얘는 웹/ms앱들 위주)
+ask/plan모드 권장
+
+에이전트빌드 패널(창)켜기: ctrl + shift + i
+
+이러이러한 거 만들어줘 보다는
+이러이러한 거 만들고 싶어, 근데 니가 코드는 제공해주지마등으로 요청하기
+파이썬으로 json 파일 수정하고 싶을때: 이럴땐 import json 주로 씁니다<-이런방식으로 알려줘 등
