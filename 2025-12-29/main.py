@@ -3,15 +3,17 @@ import datetime
 import time
 
 # 1. 메인 창 생성 (Class로부터 객체 생성)
-root = tk.Tk() # tk로부터 클래스 Tk 가져오기
-root.title("D-day") # 창 이름
-root.geometry("400x300") # 창 크기를 설정
+root = tk.Tk() # tk로부터 클래스 Tk라는 기계를 가져와서 만들기
+# 기계의 이름이 root
+root.title("D-day") # 기계 root의 창이름 설정
+root.geometry("400x300") # 기계 root의 창크기를 설정
 
+# 필요한 변수 선언
 today = datetime.date.today() # 오늘 날짜 가져오기
 이벤트날짜 = datetime.date(2025, 12, 29) # 이벤트 날짜 설정하기
 디데이 = 0 # 디데이 계산할 때 쓸 integer 변수
 
-디데이 = abs(이벤트날짜-today) # 이벤트 날짜-오늘 날짜의 절댓값을 반환
+디데이 = abs(이벤트날짜-today) # 이벤트 날짜-오늘 날짜의 절댓값을 반환 = 디데이 계산에서 +, = 지정을 위해서
 기호 = '-'
 
 if 이벤트날짜 <= today: # 만약 이벤트 날짜가 오늘보다 이전 날짜면
