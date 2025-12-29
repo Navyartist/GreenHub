@@ -10,7 +10,7 @@ root.geometry("400x300") # 기계 root의 창크기를 설정
 
 # 필요한 변수 선언
 today = datetime.date.today() # 오늘 날짜 가져오기
-이벤트날짜 = datetime.date(2025, 12, 29) # 이벤트 날짜 설정하기
+이벤트날짜 = datetime.date(2026, 2, 17) # 이벤트 날짜 설정하기
 디데이 = 0 # 디데이 계산할 때 쓸 integer 변수
 
 디데이 = abs(이벤트날짜-today) # 이벤트 날짜-오늘 날짜의 절댓값을 반환 = 디데이 계산에서 +, = 지정을 위해서
