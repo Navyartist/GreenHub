@@ -29,7 +29,6 @@ class myApp(tk.Frame): # myApp: 내가 임의로 지어준 클래스 이름
         print("발생한 위젯:", event.widget)  # 예: .!entry  경로(. <= 최상위 경로(root)를 의미함) + !Tkinter가 지어준 해당 위젯의 고유한 이름. entry 위젯이 2개면 첫번째 entry 위젯은 .!entry1, 두번째 entry 위젯은 .!entry2 등으로 이름이 지어짐
         print("마우스 좌표:", event.x, event.y)
 
-
 root = tk.Tk()
 myapp= myApp(root)
 myapp.mainloop()
