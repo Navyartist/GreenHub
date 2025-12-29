@@ -1,12 +1,4 @@
-import tkinter as tk # tkinter 쓸건데 이름이 너무 길다. 내맘대로 tk란 이름으로 쓰겠다
-
-# from tkinter import *
-# 기능자체는 1번줄이랑 같지만, 1번줄이 더 권장되는 네이밍방식
-# from tkinter import ttk
-# tkinter에 연관된? ttk란 모듈 가져와서 쓰겠다. 다른건 안 씀
-# ttk는 기본 tkinter에서 기능을 좀더 확장한 모듈
-# 더 예쁘고 세련되게 볼수있게
-# ttk는 확장 모듈이라 tk만 가져오면 ttk는 못써서 따로 가져와주어야함
+import tkinter as tk
 
 class App(tk.Frame):
     def __init__(self, master):
