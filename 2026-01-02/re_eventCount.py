@@ -18,7 +18,7 @@ class EventApp:
             }
         ]
 
-        self.name_var = tk.StringVar(value=[ev['제목'] for ev in self.events_data])
+        self.name_var = tk.StringVar(value=[ev['이벤트명'] for ev in self.events_data])
 
         # ! 메인 컨테이너
         self.main_container = tk.Label(self.root, text='메인 컨테이너', bg='yellow')
@@ -67,7 +67,7 @@ class EventApp:
 
         button_config = {"width": 8, "pady": 5}
         self.add_button = tk.Button(self.button_frame, text='추가', **button_config)
-        self.save_button = tk.Button(self.button_frame, text='저장', **button_config)
+        self.save_button = tk.Button(self.button_frame, text='저장', command=self.save_event, **button_config)
         self.delete_button = tk.Button(self.button_frame, text='삭제', **button_config)
         self.update_button = tk.Button(self.button_frame, text='수정', **button_config)
         
