@@ -98,6 +98,8 @@ class EventApp:
         m = self.m_entry.get()
         d = self.d_entry.get()
 
+        # * to-do: 제목이나 연,월,일등이 비워져 있을 때의 예외 처리 구현
+
         days = self.calculate_d_day()
         new_data = {'id': newid, '이벤트명': title, '연': y, '월': m, '일': d, '남은일수': days}
         self.events_data.append(new_data)
@@ -121,6 +123,10 @@ class EventApp:
             else:# diff가 0
                 result = "D-Day (오늘)"
             self.dday_result_label.config(text=result, fg="red" if diff == 0 else "blue") # D-day일 때 글씨를 red로
+            # ? 창에 표시될 d-day까지 남은일수를 꼭 calculate_d_day 함수에 의존해야 되는가?
+            # * dday_result_label의 config를 if-elif-else문으로 옮김
+            # * -> dday_result_label_config를 reading_events로 가져오면
+            # * -> 딕셔너리 데이터를 활용해서 디데이를 보여주는 구현이 가능할듯
             return result
         except ValueError:
             self.dday_result_label.config(text="날짜 오류", fg="grey")
