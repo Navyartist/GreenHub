@@ -28,7 +28,7 @@ class EventApp:
         self.left_label = tk.Label(self.main_container, text='왼쪽패널', bg='green', width=150)
         self.left_label.pack(side='left', fill='y')
         self.listbox = tk.Listbox(self.left_label, listvariable=self.name_var, selectmode="single")
-        # self.listbox.bind('<<ListboxSelect>>', self.reading_event)
+        self.listbox.bind('<<ListboxSelect>>', self.reading_event)
         self.listbox.pack(fill="both", expand=True, padx=5, pady=5)
 
         # ! 오른쪽 패널 (이벤트명, [yyyy, mm, dd], d-day 일수 [추가, 저장, 삭제, 수정])
@@ -77,7 +77,7 @@ class EventApp:
         self.delete_button.grid(column=2,**button_config_grid)
         self.update_button.grid(column=3,**button_config_grid)
 
-    def set_widgets_state(self, state_value):
+    def set_entry_state(self, state_value):
         """입력 위젯 잠금/해제""" # ? 중복된 부분 해결을 위해서 ai 답변으로부터 채용
         self.title_entry.config(state=state_value)
         self.y_entry.config(state=state_value)
@@ -85,7 +85,7 @@ class EventApp:
         self.d_entry.config(state=state_value)
 
     def add_event(self):
-        self.set_widgets_state("normal")
+        self.set_entry_state("normal")
         self.title_entry.delete(0, tk.END)
         self.y_entry.delete(0, tk.END)
         self.m_entry.delete(0, tk.END)
@@ -101,7 +101,7 @@ class EventApp:
         days = self.calculate_d_day()
         new_data = {'id': newid, '이벤트명': title, '연': y, '월': m, '일': d, '남은일수': days}
         self.events_data.append(new_data)
-        self.set_widgets_state("disabled")
+        self.set_entry_state("disabled")
         self.list_update()
 
     def calculate_d_day(self):
@@ -131,7 +131,24 @@ class EventApp:
         self.new_name_list = [events['이벤트명'] for events in self.events_data]
         self.name_var.set(self.new_name_list)
 
-    #def reading_event():
+    def reading_event(self, event):
+        select_index = self.listbox.curselection()
+        index = select_index[0]
+        selected_event = self.events_data[index]
+    
+        self.set_entry_state("normal")
+        self.title_entry.delete(0, tk.END)
+        self.y_entry.delete(0, tk.END)
+        self.m_entry.delete(0, tk.END)
+        self.d_entry.delete(0, tk.END)
+
+        self.title_entry.insert(0, selected_event['이벤트명'])
+        self.y_entry.insert(0, selected_event['연'])
+        self.m_entry.insert(0, selected_event['월'])
+        self.d_entry.insert(0, selected_event['일'])
+
+        self.calculate_d_day()
+        self.set_entry_state("disabled")
         # * 함께 있는 정보를 가져와야됨
         # * 모든 entry state= "normal"
         # * 이벤트명, 연월일
