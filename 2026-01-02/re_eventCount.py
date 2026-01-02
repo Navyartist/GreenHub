@@ -12,11 +12,13 @@ class EventApp:
         self.events_data = [
             {
                 "id": str(uuid.uuid4()), 
-                "제목": "첫 번째 이벤트", 
+                "이벤트명": "첫 번째 이벤트", 
                 "연": "2024", "월": "01", "일": "01",
                 "남은일수": 365
             }
         ]
+
+        self.name_var = tk.StringVar(value=[ev['제목'] for ev in self.events_data])
 
         # ! 메인 컨테이너
         self.main_container = tk.Label(self.root, text='메인 컨테이너', bg='yellow')
@@ -25,8 +27,8 @@ class EventApp:
         # ! 왼쪽 패널 (listbox)
         self.left_label = tk.Label(self.main_container, text='왼쪽패널', bg='green', width=150)
         self.left_label.pack(side='left', fill='y')
-        self.listbox = tk.Listbox(self.left_label, selectmode="single")
-        # self.event_listbox.bind('<<ListboxSelect>>', self.on_select_event)
+        self.listbox = tk.Listbox(self.left_label, listvariable=self.name_var, selectmode="single")
+        # self.listbox.bind('<<ListboxSelect>>', self.reading_event)
         self.listbox.pack(fill="both", expand=True, padx=5, pady=5)
 
         # ! 오른쪽 패널 (이벤트명, [yyyy, mm, dd], d-day 일수 [추가, 저장, 삭제, 수정])
@@ -43,15 +45,15 @@ class EventApp:
         self.m_entry = tk.Entry(self.date_frame, width=4)
         self.d_entry = tk.Entry(self.date_frame, width=4)
         
-        date_entry_config = {'row': 0, 'sticky': 'w', 'pady': 5}
-        self.y_entry.grid(column=0, **date_entry_config)
-        self.m_entry.grid(column=2,**date_entry_config)
-        self.d_entry.grid(column=4,**date_entry_config)
+        date_entry_config_grid = {'row': 0, 'sticky': 'w', 'pady': 5}
+        self.y_entry.grid(column=0, **date_entry_config_grid)
+        self.m_entry.grid(column=2,**date_entry_config_grid)
+        self.d_entry.grid(column=4,**date_entry_config_grid)
 
-        date_label_config = {'row': 0, 'sticky': 'w', 'padx': (2, 10) }
-        tk.Label(self.date_frame, text="년").grid(column=1, **date_label_config)
-        tk.Label(self.date_frame, text="월").grid(column=3, **date_label_config) # (row=0, column=3, sticky='w', padx=(2, 10))
-        tk.Label(self.date_frame, text="일").grid(column=5, **date_label_config) # (row=0, column=5, sticky='w', padx=(2, 10))
+        date_label_config_grid = {'row': 0, 'sticky': 'w', 'padx': (2, 10) }
+        tk.Label(self.date_frame, text="년").grid(column=1, **date_label_config_grid)
+        tk.Label(self.date_frame, text="월").grid(column=3, **date_label_config_grid) # (row=0, column=3, sticky='w', padx=(2, 10))
+        tk.Label(self.date_frame, text="일").grid(column=5, **date_label_config_grid) # (row=0, column=5, sticky='w', padx=(2, 10))
         # ? 중복 코드를 더 줄이는 방법은?
 
         # ! 3. 우중앙: D-day 일수
@@ -69,10 +71,73 @@ class EventApp:
         self.delete_button = tk.Button(self.button_frame, text='삭제', **button_config)
         self.update_button = tk.Button(self.button_frame, text='수정', **button_config)
         
-        self.add_button.grid(row=0, column=0, padx=5)
-        self.save_button.grid(row=0, column=1, padx=5)
-        self.delete_button.grid(row=0, column=2, padx=5)
-        self.update_button.grid(row=0, column=3, padx=5)
+        button_config_grid = {'row': 0, 'padx': 5}
+        self.add_button.grid(column=0,**button_config_grid)
+        self.save_button.grid(column=1,**button_config_grid)
+        self.delete_button.grid(column=2,**button_config_grid)
+        self.update_button.grid(column=3,**button_config_grid)
+
+    def set_widgets_state(self, state_value):
+        """입력 위젯 잠금/해제""" # ? 중복된 부분 해결을 위해서 ai 답변으로부터 채용
+        self.title_entry.config(state=state_value)
+        self.year_entry.config(state=state_value)
+        self.month_entry.config(state=state_value)
+        self.day_entry.config(state=state_value)
+
+    def add_event(self):
+        self.set_widgets_state("normal")
+        self.title_entry.delete(0, tk.END)
+        self.y_entry.delete(0, tk.END)
+        self.m_entry.delete(0, tk.END)
+        self.d_entry.delete(0, tk.END)
+
+    def save_event(self):
+        newid = str(uuid.uuid4())
+        title = self.title_entry.get()
+        year = self.y_entry.get()
+        month = self.m_entry.get()
+        day = self.d_entry.get()
+
+        days = self.calculate_d_day()
+        new_data = {'id': newid, '이벤트명': title, '연': year, '월': month, '일': day, '남은일수': days}
+        self.events_data.append(new_data)
+
+    def calculate_d_day(self):
+        try:
+            y = int(self.y_entry.get())
+            m = int(self.m_entry.get())
+            d = int(self.d_entry.get())
+            
+            target_date = datetime.datetime(y, m, d)
+            today = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+            diff = (target_date - today).days
+            
+            if diff > 0:
+                result = f"D-{abs(diff)}"
+            elif diff < 0:
+                result = f"D+{abs(diff)}"
+            else:# diff가 0
+                result = "D-Day (오늘)"
+            self.dday_result_label.config(text=result, fg="red" if diff == 0 else "blue") # D-day일 때 글씨를 red로
+            return result
+        except ValueError:
+            self.dday_result_label.config(text="날짜 오류", fg="grey")
+            return "날짜 오류"
+
+
+    def list_update(self): # 왼쪽 패널에 보여줄 이벤트 이름 리스트를 업데이트
+        self.new_name_list = [events['이벤트명'] for events in self.events_data]
+        self.name_var.set(self.new_name_list)
+
+    #def reading_event():
+        # * 함께 있는 정보를 가져와야됨
+        # * 모든 entry state= "normal"
+        # * 이벤트명, 연월일
+        # * 각 entry에 해당하는 키의 내용 가져옴
+        # * 모든 entry state= "disabled"로
+
+
+            
 
 root = tk.Tk()
 myapp = EventApp(root)
