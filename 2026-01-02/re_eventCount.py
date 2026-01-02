@@ -43,14 +43,15 @@ class EventApp:
         self.m_entry = tk.Entry(self.date_frame, width=4)
         self.d_entry = tk.Entry(self.date_frame, width=4)
         
-        self.y_entry.grid(row=0, column=0, sticky='w', pady=5)
-        self.m_entry.grid(row=0, column=2, sticky='w', pady=5)
-        self.d_entry.grid(row=0, column=4, sticky='w', pady=5)
+        date_entry_config = {'row': 0, 'sticky': 'w', 'pady': 5}
+        self.y_entry.grid(column=0, **date_entry_config)
+        self.m_entry.grid(column=2,**date_entry_config)
+        self.d_entry.grid(column=4,**date_entry_config)
 
-        label_config = {'row': 0, 'sticky': 'w', 'padx': (2, 10) }
-        tk.Label(self.date_frame, text="년").grid(column=1, **label_config)
-        tk.Label(self.date_frame, text="월").grid(column=3, **label_config) # (row=0, column=3, sticky='w', padx=(2, 10))
-        tk.Label(self.date_frame, text="일").grid(column=5, **label_config) # (row=0, column=5, sticky='w', padx=(2, 10))
+        date_label_config = {'row': 0, 'sticky': 'w', 'padx': (2, 10) }
+        tk.Label(self.date_frame, text="년").grid(column=1, **date_label_config)
+        tk.Label(self.date_frame, text="월").grid(column=3, **date_label_config) # (row=0, column=3, sticky='w', padx=(2, 10))
+        tk.Label(self.date_frame, text="일").grid(column=5, **date_label_config) # (row=0, column=5, sticky='w', padx=(2, 10))
         # ? 중복 코드를 더 줄이는 방법은?
 
         # ! 3. 우중앙: D-day 일수
