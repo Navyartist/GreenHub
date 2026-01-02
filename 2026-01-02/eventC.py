@@ -30,50 +30,43 @@ class eventApp:
         self.refresh_list()
 
     def setup_ui(self):
-        # 1. 메인 컨테이너 (좌우 구분)
+        # ! 1. 메인 컨테이너 (좌우 구분)
         self.main_container = tk.Frame(self.root)
         self.main_container.pack(fill="both", expand=True)
-        # ? fill: 창을 꽉 채울건지, 아닌지에 대한 설정 기능. both, x, y가 있고, x면 x축만 꽉 채우고, y면 y축만 채운다. both면 x,y 둘다
-        # ? expand: 사용자가 임의로 창 크기를 키우면 컨테이너 크기가 그에 따라갈 것인지 결정
-        # 2. 왼쪽 패널 (세로로 긴 메모 이름 리스트)
-        self.left_panel = tk.Frame(self.main_container, width=150)  # ? 적당한 너비를 지정
+
+        # ! 2. 왼쪽 패널 (세로로 긴 메모 이름 리스트)
+        self.left_panel = tk.Frame(self.main_container, width=150)
         self.left_panel.pack(side="left", fill="y")
-
-        self.list_label = tk.Label(self.left_panel, text="내 이벤트 목록") # ? left 패널에 집어넣을 리스트 패널
-        self.list_label.pack(pady=10) # ? pack: 정렬. padding을 y=10만큼 줄것
-
-        self.event_listbox = tk.Listbox(self.left_panel, selectmode="single") # ? selectmode: 항목중 1개만 선택 (마우스 커서 상관x)
+        # self.list_label = tk.Label(self.left_panel, text="내 이벤트 목록")
+        # self.list_label.pack(pady=10)
+        self.event_listbox = tk.Listbox(self.left_panel, selectmode="single")
         self.event_listbox.pack(fill="both", expand=True, padx=5, pady=5)
-        self.event_listbox.bind('<<ListboxSelect>>', self.on_select_event) # ? <<ListboxSelect>> 리스트가 선택되었다. eventApp의 on_select_event 함수를 실행해라
-        # * 이벤트 바인딩
+        self.event_listbox.bind('<<ListboxSelect>>', self.on_select_event) # 이벤트 바인딩
 
-        # 3. 오른쪽 패널 (입력창 및 버튼)
-        self.right_panel = tk.Frame(self.main_container) # ? 메인 컨테이너 내부에 Frame을 하나더 만든다 (제목, 내용 입력/ 버튼 만들기용)
-        self.right_panel.pack(side="right", fill="both", expand=True) # 제목이니까 잘 보이게 폰트 크기 지정
+        # ! 오른쪽 패널 (입력창 및 버튼)
+        self.right_panel = tk.Frame(self.main_container)
+        self.right_panel.pack(side="right", fill="both", expand=True)
 
-        # 상단: 이벤트명 입력
-        tk.Label(self.right_panel, text="이벤트명", bg="white").pack(anchor="w", padx=10, pady=(10, 0)) # ? anchor=앵커, 닻. 동서남북으로 내용물을 어느 방향으로 붙일지를 결정하는 고정 장치
-        self.title_entry = tk.Entry(self.right_panel, font=(12)) # * 이벤트명 입력칸
+        # ! 우상단: 이벤트명 입력
+        tk.Label(self.right_panel, text="이벤트명", bg="white").pack(anchor="w", padx=10, pady=(10, 0))
+        self.title_entry = tk.Entry(self.right_panel, font=(12))
         self.title_entry.pack(fill="x", padx=10, pady=5)
 
-        # 중간: D-day 일수, 입력창 3가지
+        # ! 우중간: D-day 일수, 입력창 3가지
         tk.Label(self.right_panel, text="이벤트 날짜 (년/월/일)", bg="white").pack(anchor="w", padx=10)
         self.date_frame = tk.Frame(self.right_panel)
         self.date_frame.pack(fill="x", padx=10, pady=5)
-
         self.year_entry = tk.Entry(self.date_frame, width=6)
         self.year_entry.pack(side="left")
         tk.Label(self.date_frame, text="년").pack(side="left", padx=(2, 10))
-
         self.month_entry = tk.Entry(self.date_frame, width=4)
         self.month_entry.pack(side="left")
         tk.Label(self.date_frame, text="월").pack(side="left", padx=(2, 10))
-
         self.day_entry = tk.Entry(self.date_frame, width=4)
         self.day_entry.pack(side="left")
         tk.Label(self.date_frame, text="일").pack(side="left", padx=(2, 10))
 
-        # 하단: 입력받은 날짜대로 남은 일수를 계산하고 표시
+        # ! 우하단: 입력받은 날짜대로 남은 일수를 계산하고 표시
         tk.Label(self.right_panel, text="남은 일수", bg="white").pack(anchor="w", padx=10, pady=(10, 0))
         self.dday_result_label = tk.Label(self.right_panel, text="날짜를 입력하세요", font=("Arial", 12, "bold"))
         self.dday_result_label.pack(pady=20)
