@@ -51,7 +51,7 @@ class EventApp:
         tk.Label(self.date_frame, text="년").grid(column=1, **label_config)
         tk.Label(self.date_frame, text="월").grid(column=3, **label_config) # (row=0, column=3, sticky='w', padx=(2, 10))
         tk.Label(self.date_frame, text="일").grid(column=5, **label_config) # (row=0, column=5, sticky='w', padx=(2, 10))
-        # ? 중복 코드를 줄이는 방법은?
+        # ? 중복 코드를 더 줄이는 방법은?
 
         # ! 3. 우중앙: D-day 일수
         tk.Label(self.right_label, text="남은 일수").pack(anchor="w", padx=10, pady=(10, 0))
