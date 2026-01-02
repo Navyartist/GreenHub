@@ -102,6 +102,7 @@ class EventApp:
         new_data = {'id': newid, '이벤트명': title, '연': y, '월': m, '일': d, '남은일수': days}
         self.events_data.append(new_data)
         self.set_widgets_state("disabled")
+        self.list_update()
 
     def calculate_d_day(self):
         try:
