@@ -66,7 +66,7 @@ class EventApp:
         self.button_frame.pack(fill='x', pady=10)
 
         button_config = {"width": 8, "pady": 5}
-        self.add_button = tk.Button(self.button_frame, text='추가', **button_config)
+        self.add_button = tk.Button(self.button_frame, text='추가', command=self.add_event, **button_config)
         self.save_button = tk.Button(self.button_frame, text='저장', command=self.save_event, **button_config)
         self.delete_button = tk.Button(self.button_frame, text='삭제', **button_config)
         self.update_button = tk.Button(self.button_frame, text='수정', **button_config)
@@ -80,9 +80,9 @@ class EventApp:
     def set_widgets_state(self, state_value):
         """입력 위젯 잠금/해제""" # ? 중복된 부분 해결을 위해서 ai 답변으로부터 채용
         self.title_entry.config(state=state_value)
-        self.year_entry.config(state=state_value)
-        self.month_entry.config(state=state_value)
-        self.day_entry.config(state=state_value)
+        self.y_entry.config(state=state_value)
+        self.m_entry.config(state=state_value)
+        self.d_entry.config(state=state_value)
 
     def add_event(self):
         self.set_widgets_state("normal")
@@ -94,13 +94,14 @@ class EventApp:
     def save_event(self):
         newid = str(uuid.uuid4())
         title = self.title_entry.get()
-        year = self.y_entry.get()
-        month = self.m_entry.get()
-        day = self.d_entry.get()
+        y = self.y_entry.get()
+        m = self.m_entry.get()
+        d = self.d_entry.get()
 
         days = self.calculate_d_day()
-        new_data = {'id': newid, '이벤트명': title, '연': year, '월': month, '일': day, '남은일수': days}
+        new_data = {'id': newid, '이벤트명': title, '연': y, '월': m, '일': d, '남은일수': days}
         self.events_data.append(new_data)
+        self.set_widgets_state("disabled")
 
     def calculate_d_day(self):
         try:
