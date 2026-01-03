@@ -68,7 +68,7 @@ class EventApp:
         self.button_frame.pack(fill='x', pady=10)
 
         button_config = {"width": 8, "pady": 5}
-        self.add_button = tk.Button(self.button_frame, text='추가', command=self.add_event, **button_config)
+        self.add_button = tk.Button(self.button_frame, text='추가', command=self.add_setting, **button_config)
         self.save_button = tk.Button(self.button_frame, text='저장', command=self.save_event, **button_config)
         self.delete_button = tk.Button(self.button_frame, text='삭제', **button_config)
         self.update_button = tk.Button(self.button_frame, text='수정', **button_config)
@@ -86,7 +86,7 @@ class EventApp:
         self.m_entry.config(state=state_value)
         self.d_entry.config(state=state_value)
 
-    def add_event(self):
+    def add_setting(self):
         self.newid = str(uuid.uuid4())
         self.set_entry_state("normal")
 
@@ -94,6 +94,7 @@ class EventApp:
         self.y_entry.delete(0, tk.END)
         self.m_entry.delete(0, tk.END)
         self.d_entry.delete(0, tk.END)
+        self.dday_result_label.config(text="날짜를 입력하세요", fg="black")
 
     def save_event(self):
         
@@ -126,7 +127,7 @@ class EventApp:
                 result = f'D+{abs(diff)}'
             else:# diff가 0
                 result = 'D-Day (오늘)'
-            self.dday_result_label.config(text=result, fg="red" if diff >= 0 else "blue")
+            self.dday_result_label.config(text=result, fg="red" if diff == 0 else "blue")
             return result
         except ValueError:
             self.dday_result_label.config(text="날짜 오류", fg="grey")
