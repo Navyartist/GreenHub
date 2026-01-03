@@ -6,7 +6,7 @@ from tkinter import messagebox
 class EventApp:
     def __init__(self, root):
         self.root = root # self.~ :인스턴스 변수
-        self.root.title('Python event Pad')
+        self.root.title('파이썬 디데이')
         self.root.geometry('500x600')
         
         self.events_data = [
@@ -28,7 +28,7 @@ class EventApp:
         # ! 왼쪽 패널 (listbox)
         self.left_label = tk.Label(self.main_container, text='왼쪽패널', bg='green', width=150)
         self.left_label.pack(side='left', fill='y')
-        self.listbox = tk.Listbox(self.left_label, listvariable=self.name_var, selectmode='single', exportselection=False)
+        self.listbox = tk.Listbox(self.left_label, listvariable=self.name_var, state='normal', selectmode='single', exportselection=False)
         self.listbox.bind('<<ListboxSelect>>', self.reading_event)
         self.listbox.pack(fill='both', expand=True, padx=5, pady=5)
 
@@ -98,7 +98,7 @@ class EventApp:
         self.dday_result_label.config(text='날짜를 입력하세요', fg='black')
 
     def set_mode(self, mode):
-        self.current_mode = mode
+        # self.current_mode = mode
         if mode == 'EDIT':
             self.title_entry.config(state='normal')
             self.y_entry.config(state='normal')
@@ -108,6 +108,7 @@ class EventApp:
             self.add_button.config(state='disabled')
             self.delete_button.config(state='normal')
             self.update_button.config(state='disabled')
+            self.listbox.config(state='disabled')
         elif mode == 'ADD':
             self.title_entry.config(state='normal')
             self.y_entry.config(state='normal')
@@ -117,6 +118,7 @@ class EventApp:
             self.add_button.config(state='disabled')
             self.delete_button.config(state='disabled')
             self.update_button.config(state='disabled')
+            self.listbox.config(state='normal')
         elif mode == 'READ':
             self.title_entry.config(state='disabled')
             self.y_entry.config(state='disabled')
@@ -126,6 +128,7 @@ class EventApp:
             self.add_button.config(state='normal')
             self.delete_button.config(state='normal')
             self.update_button.config(state='normal')
+            self.listbox.config(state='normal')
         elif mode == 'IDLE':
             self.title_entry.config(state='disabled')
             self.y_entry.config(state='disabled')
@@ -135,6 +138,7 @@ class EventApp:
             self.add_button.config(state='normal')
             self.delete_button.config(state='disabled')
             self.update_button.config(state='disabled')
+            self.listbox.config(state='normal')
 
     def add_event(self):
         self.clear_entry()
@@ -173,8 +177,8 @@ class EventApp:
 
         self.set_mode('IDLE')
 
-        messagebox.showinfo("저장 확인" "저장되었습니다!")
         self.list_update() # ? 출력: 추가 (Create), 수정 (Update) 사용자에게 피드백 출력, 좌측 리스트 업데이트
+        messagebox.showinfo("데이터 저장", "저장되었습니다!")
 
     def calculate_d_day(self):
         try:
@@ -214,9 +218,6 @@ class EventApp:
 
         self.selected_index = select_index[0] # 반환된 인덱스 튜플 맨 첫 요소를 대입
         selected_event = self.events_data[self.selected_index] # ? 처리 (Reading): 이벤트 정보 출력을 위해 선택된 리스트 (딕셔너리) 대입
-        
-        # READ 모드 활성화
-        self.set_mode('READ')
 
         self.clear_entry() # entry 입력 열고, 내부 내용 삭제 -Entry 초기화
         self.title_entry.insert(0, selected_event['이벤트명'])
