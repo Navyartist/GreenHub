@@ -1,7 +1,7 @@
-
 import datetime
 import tkinter as tk
 import uuid
+from tkinter import messagebox
 
 class EventApp:
     def __init__(self, root):
@@ -69,7 +69,7 @@ class EventApp:
         button_config = {"width": 8, "pady": 5}
         self.add_button = tk.Button(self.button_frame, text='추가', command=self.add_event, **button_config)
         self.save_button = tk.Button(self.button_frame, text='저장', command=self.save_event, state='disabled', **button_config)
-        self.delete_button = tk.Button(self.button_frame, text='삭제', state='disabled', **button_config)
+        self.delete_button = tk.Button(self.button_frame, text='삭제', command=self.delete_event, state='disabled', **button_config)
         self.update_button = tk.Button(self.button_frame, text='수정', command=self.update_event, state='disabled', **button_config)
         
         button_config_grid = {'row': 0, 'padx': 5}
@@ -78,6 +78,7 @@ class EventApp:
         self.delete_button.grid(column=2,**button_config_grid)
         self.update_button.grid(column=3,**button_config_grid)
 
+        self.set_entry_state("disabled")
 
     def clear_inputs(self):
         """모든 입력 필드와 선택 상태를 초기화"""
@@ -222,6 +223,18 @@ class EventApp:
         self.set_entry_state("normal") # 입력창 활성화
         # 이제 사용자가 내용을 수정하고 '저장' 버튼을 누를 것입니다.
             
+    def delete_event(self):
+            """'삭제' 버튼 클릭 시"""
+            if self.selected_index is None: return
+            
+            confirm = messagebox.askyesno("삭제 확인", "정말로 이 이벤트를 삭제하시겠습니까?")
+            if confirm:
+                del self.events_data[self.selected_index]
+                self.selected_index = None
+                self.list_update()
+                self.clear_inputs()
+                self.set_entry_state("disabled")
+                self.dday_result_label.config(text="삭제되었습니다", fg="gray")
 
 root = tk.Tk()
 myapp = EventApp(root)
