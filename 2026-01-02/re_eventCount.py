@@ -201,8 +201,10 @@ class EventApp:
         self.m_entry.insert(0, selected_event['월'])
         self.d_entry.insert(0, selected_event['일'])
 
-        self.calculate_d_day()
         self.set_entry_state("disabled")
+
+        self.calculate_d_day()
+        # self.set_entry_state("disabled")
         self.delete_button.config(state="normal")
         self.update_button.config(state="normal")
         # * 함께 있는 정보를 가져와야됨
@@ -222,6 +224,7 @@ class EventApp:
         
         self.set_entry_state("normal") # 입력창 활성화
         # 이제 사용자가 내용을 수정하고 '저장' 버튼을 누를 것입니다.
+        self.update_button.config(state="disabled")
             
     def delete_event(self):
             """'삭제' 버튼 클릭 시"""
